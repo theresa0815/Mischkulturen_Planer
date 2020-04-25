@@ -24,9 +24,20 @@ class _ChoosePlantsState extends State<ChoosePlants> {
     print(planted);});
     return planted;}
 
-  //void counter(String item) {setState(() {
-  //  planted.
-  //});}
+    //Counter zählt einfach wie oft das element in plan ist
+  int Counter(String plant){
+    int count = 0;
+    for (var i = 0; i < planted.length; i ++){
+      if (planted[i] == plant){
+        count = count + 1;
+      }
+    }
+    return count;
+  }
+
+
+    //TODO: have a look at flutter starter App
+
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +69,36 @@ class _ChoosePlantsState extends State<ChoosePlants> {
                 ),
               ),
               //subtitle: Text(counter(vegetable[index])),
-              trailing: Icon(Icons.add,
-              color: Colors.yellow[900],
-              ),
-              onTap: () => addPlant(vegetable[index])
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.remove,
+                    color: Colors.yellow[900],),
+                    onPressed: () {
+                    setState(() {
+                      removePlant(vegetable[index]);
+                    },);}
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8,0,8,0),
+                    child: Text((Counter(vegetable[index]).toString()),
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontFamily: 'Oswald',
+                      color: Colors.grey[600],
+                    ),),
+                  ),
+
+                  IconButton(
+                      icon: Icon(Icons.add,
+                        color: Colors.yellow[900],),
+                      onPressed: () {
+                        setState(() {
+                          addPlant(vegetable[index]);
+                        },);}
+                  ),
+                ],)
             );
           }
           //TODO: erster Buchstabe groß
@@ -72,7 +109,7 @@ class _ChoosePlantsState extends State<ChoosePlants> {
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) => Patch(
-            this.planted,
+            createPlan(this.planted),
             )));
         },
         color: Colors.yellow[900],

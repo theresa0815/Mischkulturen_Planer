@@ -10,13 +10,14 @@ List friends = [["basilikum"], ["tomate", "möhre"], ["petersilie", "basilikum"]
 
 List createPlan (List planted) {
 
-  List plan = [];
+  List<String> plan = new List<String>();
   // create Matrix
   List matrix = createMatrix(planted);
   print(matrix);
 
   // start with "most unpopular" plant as it will stand at the edge anyway
   List sum = createSumRow(matrix);
+  print(sum);
   var s = sum.indexOf(smallestValue(sum));
   var currentPlant = planted[s];
   print(currentPlant);
@@ -27,24 +28,24 @@ List createPlan (List planted) {
   {
     // del column of the currentPlant as it should not be taken again
     var s = planted.indexOf(currentPlant);
+    print("index $s");
     for (var i = 0; i < matrix.length; i ++) {
       matrix[i].removeAt(s);
-      //TODO: besser "forEach" verwenden
     }
 
     // find highest number in row (taking the "sum probability" into account) and the corresponding plant
-    print(s);
     print(matrix);
     var nu = largestValue(matrix[s]);
     print(nu);
     sum = createSumColumn(matrix);
     print(sum);
     var position = matrix[s].indexOf(nu);
-    var startvalue = sum[matrix[s].indexOf(nu)];
+    var startvalue = 10000000;
     for (var m = 0; m < matrix[0].length; m ++) {
       if ((matrix[0][m] == nu) & (sum[m] <= startvalue)){
         print("overwrite position");
         position = m;
+        print(m);
         startvalue = sum[m];
       }
     }
@@ -53,7 +54,7 @@ List createPlan (List planted) {
     print(matrix);
 
     planted.remove(currentPlant);
-    print(planted);
+    print("planted $planted");
     currentPlant = planted[position];
     print("currentplant: $currentPlant ");
 
@@ -72,7 +73,7 @@ List createPlan (List planted) {
 
 
     //half way there
-    var r = planted.indexOf(currentPlant);
+    var r = position;
     matrix.removeAt(r);
     print(matrix);
 
@@ -81,9 +82,14 @@ List createPlan (List planted) {
     print(ne);
     sum = createSumRow(matrix);
     print(sum);
-    startvalue = sum[0];
+    startvalue = 100000000;
+    //TODO: infinite instead
     for (var i = 0; i<matrix.length; i ++) {
-      if ((matrix[i][r] >= ne) & (sum[i] <= startvalue) ) {
+      if (matrix[i][r] > ne) {
+        ne = matrix[i][r];
+        position = i;
+      }
+      else if ((matrix[i][r] == ne) & (sum[i] <= startvalue)){
         ne = matrix[i][r];
         position = i;
         startvalue = sum[i];

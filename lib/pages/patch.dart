@@ -1,7 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:urbangardenplanner/pages/create_plan.dart';
-
 
 
 
@@ -28,78 +26,37 @@ class Patch extends StatelessWidget {
         backgroundColor: Colors.brown[50],
         elevation: 0,
       ),
-      body:Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              height: 150,
-              width: 250,
-              color: Colors.brown[100],
-              padding: EdgeInsets.all(15),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    color: Colors.red[400],
-                    width: 40,
-                    height: 120 ,
-                  ),
-                  SizedBox(width: 10,),
-                  Container(
-                    color: Colors.green[400],
-                    height: 120,
-                    width: 20,
-                  ),
-                  SizedBox(width: 10,),
-                  Container(
-                    color: Colors.green[800],
-                    height: 120,
-                    width: 35,
-                  ),
-                  SizedBox(width: 10,),
-                  Container(
-                    color: Colors.white30,
-                    height: 120,
-                    width: 15,
-                  ),
-                  SizedBox(width: 10,),
-                  Container(
-                    color: Colors.amber[400],
-                    height: 120,
-                    width: 20,
-                  ),
-                  SizedBox(width: 10,),
-                  Container(
-                    color: Colors.green[500],
-                    height: 120,
-                    width: 40,
-                  ),
-                ],
-
-              ),
-            ),
-            SizedBox(height: 50,),
-            FloatingActionButton(
-              onPressed: (){print(createPlan(planted));},
-            backgroundColor: Colors.white30,
-              elevation: 0,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(19.0),
-              child: Text(createPlan(planted).toString(),
-                style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'Condensed-Light',
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-          ],
-        ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.builder(
+            itemCount: planted.length,
+            itemBuilder: (context, index) {
+              print("final planted: $planted");
+                return ListTile(
+                    leading: Container(
+                      width: 40,
+                      color: Colors.lightGreen[100 * index],
+                      child: Center(
+                        child: Text((index + 1).toString(),
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'Oswald',
+                          ),),
+                      ),),
+                    title: Center(
+                      child: Text(planted[index],
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontFamily: 'Condensed-Light',
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.5,
+                        ),),
+                     ),
+                );
+            }),
       ),
       backgroundColor: Colors.brown[50],
     );
+
   }
 }
