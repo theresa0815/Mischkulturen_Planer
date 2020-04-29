@@ -2,30 +2,41 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:urbangardenplanner/pages/create_plan.dart';
 import 'package:urbangardenplanner/pages/patch.dart';
+import 'plants.dart';
 
 class ChoosePlants extends StatefulWidget {
+
   @override
   _ChoosePlantsState createState() => _ChoosePlantsState();
 }
 
 class _ChoosePlantsState extends State<ChoosePlants> {
-  final List<String> vegetable = ["tomate", "basilikum", "möhre", "steckrübe", "petersilie"];
-  List<String> planted = [];
 
-  List addPlant(String item) {
+  List<Plant> vegetables = [
+    Plant(name:'Tomate', index: 1, friends: [2,6], enemies: [5, 3]),
+    Plant(name: 'Basilikum', index: 2, friends: [1, 3], enemies: [6]),
+    Plant(name: 'Möhre', index: 3, friends: [5, 2, 7], enemies: [1],),
+    Plant(name: 'Steckrübe', index: 4, friends: [6], enemies: [5]),
+    Plant(name: 'Petersilie', index: 5, friends: [3], enemies: [1, 4]),
+    Plant(name: 'Mangold', index: 6, friends: [1,4,7], enemies: [2]),
+    Plant(name: 'Gurke', index: 7, friends: [6,3], enemies: []),
+  ];
+
+  List<Plant> planted = [];
+
+  List<Plant> addPlant(Plant item) {
     setState(() {
     planted.add(item);
     print(planted);});
     return planted;}
 
-  List removePlant(String item)
+  List removePlant(Plant item)
     {setState(() {
     planted.remove(item);
     print(planted);});
     return planted;}
 
-    //Counter zählt einfach wie oft das element in plan ist
-  int Counter(String plant){
+  int Counter(Plant plant){
     int count = 0;
     for (var i = 0; i < planted.length; i ++){
       if (planted[i] == plant){
@@ -34,9 +45,6 @@ class _ChoosePlantsState extends State<ChoosePlants> {
     }
     return count;
   }
-
-
-    //TODO: have a look at flutter starter App
 
 
   @override
@@ -57,10 +65,10 @@ class _ChoosePlantsState extends State<ChoosePlants> {
       body: Padding(
         padding: EdgeInsets.fromLTRB(15, 8, 15, 0),
         child: ListView.builder(
-          itemCount: vegetable.length,
+          itemCount: vegetables.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(vegetable[index],
+              title: Text(vegetables[index].name,
                 style: TextStyle(
                   fontSize: 17,
                   fontFamily: 'Condensed-Light',
@@ -68,7 +76,6 @@ class _ChoosePlantsState extends State<ChoosePlants> {
                   letterSpacing: 1.5,
                 ),
               ),
-              //subtitle: Text(counter(vegetable[index])),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
@@ -76,13 +83,13 @@ class _ChoosePlantsState extends State<ChoosePlants> {
                     icon: Icon(Icons.remove,
                     color: Colors.yellow[900],),
                     onPressed: () {
-                    setState(() {
-                      removePlant(vegetable[index]);
+                      setState(() {
+                      removePlant(vegetables[index]);
                     },);}
                     ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(8,0,8,0),
-                    child: Text((Counter(vegetable[index]).toString()),
+                    child: Text((Counter(vegetables[index]).toString()),
                     style: TextStyle(
                       fontSize: 17,
                       fontFamily: 'Oswald',
@@ -95,13 +102,12 @@ class _ChoosePlantsState extends State<ChoosePlants> {
                         color: Colors.yellow[900],),
                       onPressed: () {
                         setState(() {
-                          addPlant(vegetable[index]);
+                          addPlant(vegetables[index]);
                         },);}
                   ),
                 ],)
             );
           }
-          //TODO: erster Buchstabe groß
         ),
       ),
       backgroundColor: Colors.brown[50],

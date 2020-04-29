@@ -1,12 +1,12 @@
 
 import 'package:flutter/material.dart';
-
+import 'plants.dart';
 
 
 class Patch extends StatelessWidget {
 
 
-  List<String> planted ;
+  List<Plant> planted ;
   //constructor
   Patch(this.planted);
 
@@ -44,7 +44,7 @@ class Patch extends StatelessWidget {
                           ),),
                       ),),
                     title: Center(
-                      child: Text(planted[index],
+                      child: Text(planted[index].name,
                         style: TextStyle(
                           fontSize: 17,
                           fontFamily: 'Condensed-Light',
@@ -57,6 +57,5 @@ class Patch extends StatelessWidget {
       ),
       backgroundColor: Colors.brown[50],
     );
-
   }
 }

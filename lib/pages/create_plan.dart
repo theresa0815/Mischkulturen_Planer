@@ -1,16 +1,9 @@
 import 'dart:math';
+import 'plants.dart';
 
-import 'package:flutter/gestures.dart';
+List createPlan (List<Plant> planted) {
 
-
-List vegetable = ["tomate", "basilikum", "möhre", "steckrübe", "petersilie"];
-List enemies = [["petersilie", "möhre"], [], ["tomate"], ["petersilie"], ["tomate", "steckrübe"]];
-List friends = [["basilikum"], ["tomate", "möhre"], ["petersilie", "basilikum"], [], ["möhre"]];
-
-
-List createPlan (List planted) {
-
-  List<String> plan = new List<String>();
+  List<Plant> plan = new List<Plant>();
   // create Matrix
   List matrix = createMatrix(planted);
   print(matrix);
@@ -19,7 +12,7 @@ List createPlan (List planted) {
   List sum = createSumRow(matrix);
   print(sum);
   var s = sum.indexOf(smallestValue(sum));
-  var currentPlant = planted[s];
+  Plant currentPlant = planted[s];
   print(currentPlant);
   plan.add(currentPlant);
 
@@ -121,15 +114,15 @@ List createPlan (List planted) {
 }
 
 
-int checkRelation (String plant, String neighbor) {
-  if (friends[vegetable.indexOf(plant)].contains(neighbor))
+int checkRelation (Plant plant, Plant neighbor) {
+  if (plant.friends.contains(neighbor.index))
     return 10;
-  else if (enemies[vegetable.indexOf(plant)].contains(neighbor))
+  else if (plant.enemies.contains(neighbor.index))
     return 0;
   else return 5;
 }
 
-createMatrix(List planted){
+createMatrix(List<Plant> planted){
   int size = planted.length;
   List<List<int>> matrix = List<List<int>>();
   for (var i = 0; i<size; i ++) {
